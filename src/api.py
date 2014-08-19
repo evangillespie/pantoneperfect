@@ -1,5 +1,6 @@
 
 from .color import PPColor
+from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD
 from PIL import Image
 
 __author__ = ('evan', )
@@ -20,6 +21,12 @@ class PPApi(object):
         pixel_sum = {'red':0, 'green':0, 'blue':0}
         pixel_count = 0
         for r,g,b in img.getdata():
+            if IGNORE_BRIGHT_PIXELS:
+                if r >= IGNORE_BRIGHT_THRESHHOLD and \
+                    g >= IGNORE_BRIGHT_THRESHHOLD and \
+                    b >= IGNORE_BRIGHT_THRESHHOLD:
+                    continue
+
             pixel_sum['red'] += r
             pixel_sum['green'] += g
             pixel_sum['blue'] += b
