@@ -1,7 +1,10 @@
 
 from .color import PPColor
-from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD
+from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD, IMAGE_DIRECTORY
 from PIL import Image
+
+# sudo apt-get install python-picamera
+import picamera
 
 __author__ = ('evan', )
 
@@ -37,3 +40,17 @@ class PPApi(object):
         b_avg = int(pixel_sum['blue'] / pixel_count)
 
         return PPColor.create_color(r_avg, g_avg, b_avg)
+
+    def take_picture(self):
+        """
+        take a picture and save it in the configured place
+
+        :return string: filename
+        """
+        filename = "sky_"+time.time()".jpg"
+        directory = IMAGE_DIRECTORY
+        camera = picamera.PiCamera()
+        camera.capture(directory+"/"+filename)
+        return filename
+
+        

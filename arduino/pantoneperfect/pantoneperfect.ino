@@ -18,12 +18,12 @@ void setup(){
 
 void loop(){
   for (int i=0; i < num_neopixels; i++){
-    led_strip.setPixelColor(i, led_strip.Color(255,0,0));
+    led_strip.setPixelColor(i, led_strip.Color(30, 70, 30));
     led_strip.show();
     delay(10); 
   }
   for (int i=0; i < num_neopixels; i++){
-    led_strip.setPixelColor(i, led_strip.Color(0,255,0));
+    led_strip.setPixelColor(i, led_strip.Color(15, 40, 80));
     led_strip.show();
     delay(10); 
   }

@@ -1,5 +1,6 @@
-
+import time
 from sys import argv
+from PIL import Image
 
 from src.api import PPApi
 
@@ -13,7 +14,21 @@ def get_image_color(filepath):
     print api.get_image_color(filepath)
 
 def take_picture():
-    raise NotImplementedError("You have not set up picture taking yet")
+    """
+    take a picture and save it in the configured directory
+    """
+    api = PPApi()
+    filename = api.take_picture()
+
+    img = Image.open(filename)
+    img.show()
+
+def take_and_analyze_picture():
+    """
+    take a picture and find the colour
+    """
+    api = PPApi()
+    filename = api.take_picture()
 
 def run(interval):
     raise NotImplementedError("You have not set up the infinite loop yet")
@@ -34,6 +49,8 @@ if __name__ == '__main__':
             else: print_help()
         elif command == 'take_picture':
             take_picture()
+        elif command == 'take_and_analyze_picture':
+            take_and_analyze_picture()
         elif command == 'run':
             if len(argv) == 3:
                 time = int(argv[2])
