@@ -29,6 +29,7 @@ def take_and_analyze_picture():
     """
     api = PPApi()
     filename = api.take_picture()
+    get_image_color(filename)
 
 def run(interval):
     raise NotImplementedError("You have not set up the infinite loop yet")
