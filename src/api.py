@@ -1,4 +1,4 @@
-
+import time
 from .color import PPColor
 from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD, IMAGE_DIRECTORY
 from PIL import Image
@@ -47,10 +47,10 @@ class PPApi(object):
 
         :return string: filename
         """
-        filename = "sky_"+time.time()".jpg"
+        filename = "sky_"+str(int(time.time()))+".jpg"
         directory = IMAGE_DIRECTORY
         camera = picamera.PiCamera()
         camera.capture(directory+"/"+filename)
-        return filename
+        return directory+"/"+filename
 
         
