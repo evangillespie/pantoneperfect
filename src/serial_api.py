@@ -35,5 +35,5 @@ class SerialApi(object):
             raise Exception("blue component out of range: %s" % b)
             
         ser_str = '%03d%03d%03d' % (r,g,b)
-
+        print "writing %s" % ser_str
         self.ser.write(ser_str)
