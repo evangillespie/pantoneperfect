@@ -1,4 +1,4 @@
-from .config import SERIAL_DEVICE
+from .config import SERIAL_DEVICE, SERIAL_DEVICE2
 
 import serial
 
