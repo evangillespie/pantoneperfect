@@ -36,6 +36,9 @@ def send_serial(r, g, b):
     ser = SerialApi()
     ser.send_color(r, g, b)
 
+    time.sleep(1)
+    print "done writing"
+
 def picture_to_arduino():
     """
     take a picture and send it's average colour to the arduino over serial

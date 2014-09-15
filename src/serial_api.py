@@ -10,6 +10,7 @@ class SerialApi(object):
     """
 
     def __init__(self):
+        self.ser = None
         try:
             self.ser = serial.Serial(SERIAL_DEVICE, 9600)
         except serial.serialutil.SerialException:
