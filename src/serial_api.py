@@ -36,4 +36,4 @@ class SerialApi(object):
             
         ser_str = '%03d%03d%03d' % (r,g,b)
 
-        self.ser(ser_str)
+        self.ser.write(ser_str)
