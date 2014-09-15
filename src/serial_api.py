@@ -10,8 +10,10 @@ class SerialApi(object):
     """
 
     def __init__(self):
-        self.ser = serial.Serial(SERIAL_DEVICE, 9600)
-
+    	try:
+	        self.ser = serial.Serial(SERIAL_DEVICE, 9600)
+	    except serial.serialutil.SerialException:
+	    	self.ser = serial.Serial(SERIAL_DEVICE2, 9600)
     def send_color(self, r, g, b):
     	"""
     	send a colour string over the serial connection to the arduino

@@ -9,3 +9,4 @@ IMAGE_DIRECTORY = '/home/pi/pantoneperfect/images'
 
 # where to look for the arduino on serial
 SERIAL_DEVICE = '/dev/ttyACM0'
+SERIAL_DEVICE2 = '/dev/ttyACM1'
