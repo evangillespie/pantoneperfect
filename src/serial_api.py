@@ -38,4 +38,4 @@ class SerialApi(object):
         print self.ser
         print ser_str.__class__
         print "writing %s" % ser_str
-        self.ser.write(ser_str)
+        print self.ser.write(ser_str)
