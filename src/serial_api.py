@@ -1,5 +1,7 @@
 from .config import SERIAL_DEVICE
 
+import serial
+
 __author__ = ('evan', )
 
 class SerialApi(object):
@@ -8,8 +10,7 @@ class SerialApi(object):
     """
 
     def __init__(self):
-        pass
-        # TODO: connect over serial
+        self.ser = serial.Serial(SERIAL_DEVICE, 9600)
 
     def send_color(self, r, g, b):
     	"""
@@ -32,5 +33,5 @@ class SerialApi(object):
     		raise Exception("blue component out of range: %s" % b)
     		
     	ser_str = '%03d%03d%03d' % (r,g,b)
-    	
-    	# TODO: send the serial string
+
+    	self.ser(ser_str)
