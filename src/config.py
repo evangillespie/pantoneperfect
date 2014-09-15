@@ -6,3 +6,6 @@ IGNORE_BRIGHT_THRESHHOLD=200
 
 # directory in the filesyetem that images are stored in
 IMAGE_DIRECTORY = '/home/pi/pantoneperfect/images'
+
+# where to look for the arduino on serial
+SERIAL_DEVICE = '/dev/ttyACM0'
