@@ -7,6 +7,17 @@ from src.serial_api import SerialApi
 
 __author__ = ('evan', )
 
+def test():
+    import sys
+    print sys.path
+
+    import serial
+    s = serial.Serial('/dev/ttyACM0', 9600)
+    print s.write(chr(50))
+    print s.write(chr(50))
+    print s.write(chr(50))
+    print s.read()
+
 def get_image_color(filepath):
     """
     get the average colour of an image file
@@ -33,11 +44,25 @@ def send_serial(r, g, b):
     """
     send an rbg colour to the arduino over serial
     """
-    ser = SerialApi()
-    ser.send_color(r, g, b)
+    import serial
+    from src.config import SERIAL_DEVICE
+    ser = serial.Serial(SERIAL_DEVICE, 9600)
 
-    time.sleep(1)
-    print "done writing"
+    r = int(r)
+    g = int(g)
+    b = int(b)
+            
+    ser_str = '%03d%03d%03d' % (r,g,b)
+    print ser
+    print ser_str.__class__
+    print "writing %s" % ser_str
+    print ser.write(ser_str)
+
+    time.sleep(5)
+    #ser = SerialApi()
+    #ser.send_color(r, g, b)
+    
+    #print "done writing"
 
 def picture_to_arduino():
     """
@@ -82,6 +107,8 @@ if __name__ == '__main__':
             else:
                 time = 60
                 run(time)
+        elif command == 'test':
+            test()
 
     else:
         print_help()
