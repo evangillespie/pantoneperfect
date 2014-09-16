@@ -22,28 +22,24 @@ void setup(){
 
 int state = 0;
 void loop(){
-  if (Serial.available())  {
+  if (Serial.available() >= 3)  {
+    pulse_led(Serial.available());
     // expect communications in the form: RRRGGGBBB
-    char red[] = "000";
-    char green[] = "000";
-    char blue[] = "000";
+    int red;
+    int green;
+    int blue;
     
-    Serial.readBytes(red, 3);
-    Serial.readBytes(green, 3);
-    Serial.readBytes(blue, 3);
+    red = Serial.read();
+    green = Serial.read();
+    blue = Serial.read();
     
-    light_strip(atoi(red), atoi(green), atoi(blue));
+    Serial.write(255); // send confirmation message back
     
-     if ( state == 0 ){
-       state = 1;
-       digitalWrite(13, HIGH);
-     }
-     else {
-       state = 0;
-       digitalWrite(13, LOW);
-     }
+    light_strip(red, green, blue);
+    
+    digitalWrite(13, !digitalRead(13));
   }
-  delay(500);
+  delay(50);
   
 //  light_strip(255, 0, 0);
 //  delay(5000);
@@ -53,6 +49,23 @@ void loop(){
 //  delay(5000);
   
 }
+
+void pulse_led(int n) {
+  digitalWrite(13, LOW);
+  delay(500);
+  for ( int i = 0; i < n; i++ ){
+    digitalWrite(13, HIGH);
+    delay(500);
+    digitalWrite(13, LOW);
+    delay(500);
+  }
+}
+  
+void blink_led() {
+  digitalWrite(13, !digitalRead(13));
+  delay(10);
+  digitalWrite(13, !digitalRead(13));
+} 
 
 void light_strip(int red, int green, int blue) {
   // TODO: validation
