@@ -1,6 +1,7 @@
 import time
 from sys import argv
 from PIL import Image
+import RPi.GPIO as GPIO
 
 from src.api import PPApi
 from src.serial_api import SerialApi
@@ -64,7 +65,16 @@ def picture_to_arduino():
     send_serial(color[0], color[1], color[2])
 
 def run(interval):
-    raise NotImplementedError("You have not set up the infinite loop yet")
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(24, GPIO.IN)
+
+    while True:
+        # TODO: implement soft shutdown
+
+        input_value = GPIO.input(24)
+        if input_value == True:
+            # TODO: should we light an LED to show that the process started?
+            picture_to_arduino()
 
 def print_help():
     print "USAGE: %s <command>" % argv[0]

@@ -13,9 +13,9 @@ class SerialApi(object):
     def __init__(self):
         self.ser = None
         try:
-            self.ser = serial.Serial(SERIAL_DEVICE, 9600)
+            self.ser = serial.Serial(SERIAL_DEVICE, 9600, timeout=5.0) # 5 second read timeout.
         except serial.serialutil.SerialException:
-            self.ser = serial.Serial(SERIAL_DEVICE2, 9600)
+            self.ser = serial.Serial(SERIAL_DEVICE2, 9600, timeout=5.0)
 
         sleep(2)
 
