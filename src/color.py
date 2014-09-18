@@ -33,3 +33,9 @@ class PPColor(object):
 
     def __repr__(self):
         return "R: %s\t G: %s\tB: %s" % (self.R, self.G, self.B)
+
+    def to_tuple(self):
+        """
+        return a (R,G,B) tuple representing this colour
+        """
+        return (self.R, self,G, self.B)

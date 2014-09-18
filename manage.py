@@ -23,7 +23,8 @@ def get_image_color(filepath):
     get the average colour of an image file
     """
     api = PPApi()
-    print api.get_image_color(filepath)
+    color = api.get_image_color(filepath)
+    return color
 
 def take_picture():
     """
@@ -38,37 +39,29 @@ def take_and_analyze_picture():
     """
     api = PPApi()
     filename = api.take_picture()
-    get_image_color(filename)
+    color = get_image_color(filename)
+    return color
 
 def send_serial(r, g, b):
     """
     send an rbg colour to the arduino over serial
     """
-    import serial
-    from src.config import SERIAL_DEVICE
     ser = serial.Serial(SERIAL_DEVICE, 9600)
 
+    #make sure that r,g,b are ints
     r = int(r)
     g = int(g)
     b = int(b)
             
-    ser_str = '%03d%03d%03d' % (r,g,b)
-    print ser
-    print ser_str.__class__
-    print "writing %s" % ser_str
-    print ser.write(ser_str)
-
-    time.sleep(5)
-    #ser = SerialApi()
-    #ser.send_color(r, g, b)
-    
-    #print "done writing"
+    ser = SerialApi()
+    ser.send_color(r, g, b)
 
 def picture_to_arduino():
     """
     take a picture and send it's average colour to the arduino over serial
     """
-    raise NotImplementedError("no serial yet")
+    color = take_and_analyze_picture()
+    send_serial(color[0], color[1], color[2])
 
 def run(interval):
     raise NotImplementedError("You have not set up the infinite loop yet")

@@ -1,6 +1,7 @@
 from .config import SERIAL_DEVICE, SERIAL_DEVICE2
 
 import serial
+from time import sleep
 
 __author__ = ('evan', )
 
@@ -16,6 +17,8 @@ class SerialApi(object):
         except serial.serialutil.SerialException:
             self.ser = serial.Serial(SERIAL_DEVICE2, 9600)
 
+        sleep(2)
+
     def send_color(self, r, g, b):
         """
         send a colour string over the serial connection to the arduino
@@ -24,7 +27,7 @@ class SerialApi(object):
         :param g: green
         :param b: blue
         """
-        # make sure the components are integers
+        # make double sure the components are integers
         r = int(r)
         g = int(g)
         b = int(b)
@@ -36,8 +39,10 @@ class SerialApi(object):
         if b > 255 or b < 0:
             raise Exception("blue component out of range: %s" % b)
             
-        ser_str = '%03d%03d%03d' % (r,g,b)
-        print self.ser
-        print ser_str.__class__
-        print "writing %s" % ser_str
-        print self.ser.write(ser_str)
+        self.ser.write(chr(r))
+        self.ser.write(chr(g))
+        self.ser.write(chr(b))
+
+        feedback = self.ser.read()
+
+        print feedback

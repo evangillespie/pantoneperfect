@@ -36,7 +36,8 @@ class PPApi(object):
         g_avg = int(pixel_sum['green'] / pixel_count)
         b_avg = int(pixel_sum['blue'] / pixel_count)
 
-        return PPColor.create_color(r_avg, g_avg, b_avg)
+        color = PPColor.create_color(r_avg, g_avg, b_avg)
+        return color.to_tuple()
 
     def take_picture(self):
         """
