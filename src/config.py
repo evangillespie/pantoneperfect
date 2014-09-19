@@ -12,7 +12,7 @@ SERIAL_DEVICE = '/dev/ttyACM0'
 SERIAL_DEVICE2 = '/dev/ttyACM1'
 
 # Should we compare the colour to one of a pre-defined set?
-COMPARE_COLOR=False
+COMPARE_COLOR=True
 
 COMPARE_COLOR_SET = [
 	(255, 255, 255),
