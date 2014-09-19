@@ -28,6 +28,20 @@ class PPColor(object):
 
         return c
 
+    def get_distance(self, other_color):
+        """
+        get the distance between this color and another
+
+        :param other_color: the other colour object to compare with
+
+        :return int:
+        """
+        return sqrt(
+            pow(self.R - other_color.R, 2) +\
+            pow(self.G - other_color.G, 2) +\
+            pow(self.B - other_color.B, 2) +\
+        )
+
     def __str__(self):
         return self.__repr__()
 

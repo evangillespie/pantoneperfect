@@ -8,17 +8,6 @@ from src.serial_api import SerialApi
 
 __author__ = ('evan', )
 
-def test():
-    import sys
-    print sys.path
-
-    import serial
-    s = serial.Serial('/dev/ttyACM0', 9600)
-    print s.write(chr(50))
-    print s.write(chr(50))
-    print s.write(chr(50))
-    print s.read()
-
 def get_image_color(filepath):
     """
     get the average colour of an image file
@@ -60,6 +49,7 @@ def picture_to_arduino():
     take a picture and send it's average colour to the arduino over serial
     """
     color = take_and_analyze_picture()
+    print color
     send_serial(color[0], color[1], color[2])
 
 def run():
@@ -71,7 +61,6 @@ def run():
 
         input_value = GPIO.input(24)
         if input_value == True:
-            print "button pressed"
             # TODO: should we light an LED to show that the process started?
             picture_to_arduino()
 
