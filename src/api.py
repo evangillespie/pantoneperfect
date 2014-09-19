@@ -1,6 +1,6 @@
 import time
 from .color import PPColor
-from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD, IMAGE_DIRECTORY
+from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD, IMAGE_DIRECTORY, COMPARE_COLOR, COMPARE_COLOR_SET
 from PIL import Image
 
 __author__ = ('evan', )
@@ -37,7 +37,17 @@ class PPApi(object):
         b_avg = int(pixel_sum['blue'] / pixel_count)
 
         color = PPColor.create_color(r_avg, g_avg, b_avg)
-        return color.to_tuple()
+        if COMPARE_COLOR:
+            min_distance = 255*255*3    # some impossibly huge distance
+            best_match = None
+            for compare_color_tuple in COMPARE_COLOR_SET:
+                distance = color.get_distance(compare_color_tuple)
+                if ( not best_match ) or ( distance < min_distance ):
+                    best_match = PPColor.create_color(compare_color_tuple[0], compare_color_tuple[1], compare_color_tuple[2])
+                    min_distance = distance
+            return best_match.to_tuple()
+        else:
+            return color.to_tuple()
 
     def take_picture(self):
         """

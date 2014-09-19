@@ -73,8 +73,11 @@ def run(interval):
 
         input_value = GPIO.input(24)
         if input_value == True:
+            print "button pressed"
             # TODO: should we light an LED to show that the process started?
-            picture_to_arduino()
+            # picture_to_arduino()
+
+        time.sleep(0.01)
 
 def print_help():
     print "USAGE: %s <command>" % argv[0]
