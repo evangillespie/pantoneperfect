@@ -13,7 +13,7 @@ class PPApi(object):
 
     def __init__(self):
         self.camera = picamera.PiCamera()
-        self.camera.resolution = (200,200)
+        self.camera.resolution = (640, 480)
 
     def get_image_color(self, filepath):
         """

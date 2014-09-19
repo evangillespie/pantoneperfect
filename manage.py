@@ -65,7 +65,7 @@ def run():
         input_value = GPIO.input(24)
         if input_value == True:
             # TODO: should we light an LED to show that the process started?
-            filename = api.take_picture(api)
+            filename = api.take_picture()
             color = api.get_image_color(filename)
             serial_api.send_color(r, g, b)
 
