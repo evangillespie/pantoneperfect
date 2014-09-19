@@ -2,6 +2,7 @@ import time
 from .color import PPColor
 from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD, IMAGE_DIRECTORY, COMPARE_COLOR, COMPARE_COLOR_SET
 from PIL import Image
+import picamera
 
 __author__ = ('evan', )
 
@@ -11,7 +12,7 @@ class PPApi(object):
     """
 
     def __init__(self):
-        pass
+        self.camera = picamera.PiCamera()
 
     def get_image_color(self, filepath):
         """
@@ -55,13 +56,11 @@ class PPApi(object):
 
         :return string: filename
         """
-        # sudo apt-get install python-picamera
-        import picamera
         
         filename = "sky_"+str(int(time.time()))+".jpg"
         directory = IMAGE_DIRECTORY
-        camera = picamera.PiCamera()
-        camera.capture(directory+"/"+filename)
+        
+        self.camera.capture(directory+"/"+filename)
         return directory+"/"+filename
 
         
