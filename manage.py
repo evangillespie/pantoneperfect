@@ -47,8 +47,6 @@ def send_serial(r, g, b):
     """
     send an rbg colour to the arduino over serial
     """
-    ser = serial.Serial(SERIAL_DEVICE, 9600)
-
     #make sure that r,g,b are ints
     r = int(r)
     g = int(g)
@@ -75,7 +73,7 @@ def run():
         if input_value == True:
             print "button pressed"
             # TODO: should we light an LED to show that the process started?
-            # picture_to_arduino()
+            picture_to_arduino()
 
         time.sleep(0.01)
 
