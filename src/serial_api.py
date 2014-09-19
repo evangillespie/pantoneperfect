@@ -17,7 +17,7 @@ class SerialApi(object):
         except serial.serialutil.SerialException:
             self.ser = serial.Serial(SERIAL_DEVICE2, 9600, timeout=5.0)
 
-        sleep(2)
+        sleep(1)
 
     def send_color(self, r, g, b):
         """

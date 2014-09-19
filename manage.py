@@ -8,14 +8,11 @@ from src.serial_api import SerialApi
 
 __author__ = ('evan', )
 
-def get_image_color(api= None, filepath=None):
+def get_image_color(filepath):
     """
     get the average colour of an image file
     """
-    if filepath == None:
-        raise Exception()
-    if api == None:
-        api = PPApi()
+    api = PPApi()
     color = api.get_image_color(filepath)
     return color
 
@@ -34,7 +31,7 @@ def take_and_analyze_picture(api = None):
     if api == None:
         api = PPApi()
     filename = api.take_picture(api)
-    color = get_image_color(api, filename)
+    color = get_image_color(filename)
     return color
 
 def send_serial(r, g, b):
@@ -49,11 +46,11 @@ def send_serial(r, g, b):
     ser = SerialApi()
     ser.send_color(r, g, b)
 
-def picture_to_arduino(api = None):
+def picture_to_arduino():
     """
     take a picture and send it's average colour to the arduino over serial
     """
-    color = take_and_analyze_picture(api)
+    color = take_and_analyze_picture()
     print color
     send_serial(color[0], color[1], color[2])
 
@@ -61,13 +58,16 @@ def run():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(24, GPIO.IN)
     api = PPApi()
+    serial_api = SerialApi()
     while True:
         # TODO: implement soft shutdown
 
         input_value = GPIO.input(24)
         if input_value == True:
             # TODO: should we light an LED to show that the process started?
-            picture_to_arduino(api)
+            filename = api.take_picture(api)
+            color = api.get_image_color(filename)
+            serial_api.send_color(r, g, b)
 
         time.sleep(0.01)
 
