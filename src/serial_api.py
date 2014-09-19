@@ -18,6 +18,7 @@ class SerialApi(object):
             self.ser = serial.Serial(SERIAL_DEVICE2, 9600, timeout=5.0)
 
         sleep(2)
+        print "one"
 
     def send_color(self, r, g, b):
         """
@@ -38,9 +39,10 @@ class SerialApi(object):
             raise Exception("green component out of range: %s" % g)
         if b > 255 or b < 0:
             raise Exception("blue component out of range: %s" % b)
-            
+        print "two"
+
         self.ser.write(chr(r))
         self.ser.write(chr(g))
         self.ser.write(chr(b))
-
+        print "three"
         feedback = self.ser.read()

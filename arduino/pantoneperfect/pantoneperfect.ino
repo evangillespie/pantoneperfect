@@ -53,7 +53,6 @@ void loop(){
     }
   }
   delay(50);
-  
 }
 
 void light_strip(int red, int green, int blue) {
