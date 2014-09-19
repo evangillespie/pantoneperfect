@@ -1,4 +1,5 @@
 import time
+import os
 from sys import argv
 from PIL import Image
 import RPi.GPIO as GPIO
@@ -55,14 +56,16 @@ def picture_to_arduino():
     send_serial(color[0], color[1], color[2])
 
 def run():
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(24, GPIO.IN)
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(18, GPIO.IN)
+    GPIO.setup(7, GPIO.IN)
     api = PPApi()
     serial_api = SerialApi()
     while True:
         # TODO: implement soft shutdown
 
-        input_value = GPIO.input(24)
+        input_value = GPIO.input(18)
+        shutdown = GPIO.input(7)
         if input_value == True:
             # TODO: should we light an LED to show that the process started?
             filename = api.take_picture()
@@ -71,6 +74,9 @@ def run():
             g = color[1]
             b = color[2]
             serial_api.send_color(r, g, b)
+        if shutdown == True:
+            os.system("sudo shutdown -h now")
+            break
 
         time.sleep(0.01)
 
