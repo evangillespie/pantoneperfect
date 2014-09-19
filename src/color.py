@@ -38,4 +38,4 @@ class PPColor(object):
         """
         return a (R,G,B) tuple representing this colour
         """
-        return (self.R, self,G, self.B)
+        return (self.R, self.G, self.B)
