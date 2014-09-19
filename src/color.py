@@ -40,7 +40,7 @@ class PPColor(object):
         return sqrt(
             pow(self.R - other_color_tuple[0], 2) +\
             pow(self.G - other_color_tuple[1], 2) +\
-            pow(self.B - other_color_tuple[2], 2) +\
+            pow(self.B - other_color_tuple[2], 2)
         )
 
     def __str__(self):
