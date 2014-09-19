@@ -8,10 +8,12 @@ from src.serial_api import SerialApi
 
 __author__ = ('evan', )
 
-def get_image_color(api= None, filepath):
+def get_image_color(api= None, filepath=None):
     """
     get the average colour of an image file
     """
+    if filepath == None:
+        raise Exception()
     if api == None:
         api = PPApi()
     color = api.get_image_color(filepath)
