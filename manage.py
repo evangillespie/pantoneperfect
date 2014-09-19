@@ -64,7 +64,7 @@ def picture_to_arduino():
     color = take_and_analyze_picture()
     send_serial(color[0], color[1], color[2])
 
-def run(interval):
+def run():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(24, GPIO.IN)
 
@@ -87,7 +87,7 @@ def print_help():
     print "take_and_analyze_picture"
     print "picture_to_arduino"
     print "send_serial <red> <green> <blue>"
-    print "run <update_seconds=60>"
+    print "run"
 
 if __name__ == '__main__':
     if len(argv) >= 2:
@@ -108,11 +108,7 @@ if __name__ == '__main__':
             else:
                 print_help()
         elif command == 'run':
-            if len(argv) == 3:
-                time = int(argv[2])
-            else:
-                time = 60
-                run(time)
+                run()
         elif command == 'test':
             test()
 
