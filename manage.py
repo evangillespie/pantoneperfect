@@ -67,6 +67,9 @@ def run():
             # TODO: should we light an LED to show that the process started?
             filename = api.take_picture()
             color = api.get_image_color(filename)
+            r = color[0]
+            g = color[1]
+            b = color[2]
             serial_api.send_color(r, g, b)
 
         time.sleep(0.01)
