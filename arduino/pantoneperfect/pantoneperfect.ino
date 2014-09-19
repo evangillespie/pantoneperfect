@@ -21,6 +21,7 @@ void setup(){
 }
 
 int state = 0;
+unsigned long timer = 0;
 void loop(){
   if (Serial.available() >= 3)  {
     // expect communications in the form: RRRGGGBBB
@@ -38,38 +39,22 @@ void loop(){
     
     digitalWrite(13, !digitalRead(13));
   }
-  else {
-    pulse_led(Serial.available());
+  else if (Serial.available() > 0){
+    if ( timer == 0 ){
+      timer = millis();
+    }
+
+    if ( ( millis() - timer ) > 10*1000 ) {
+      // clear the read buffer
+      timer = 0;
+      while( Serial.available() > 0 ) {
+        Serial.read();
+      }
+    }
   }
   delay(50);
   
-//  light_strip(255, 0, 0);
-//  delay(5000);
-//  light_strip(0, 255, 0);
-//  delay(5000);
-//  light_strip(0, 0, 255);
-//  delay(5000);
-  
 }
-
-void pulse_led(int n) {
-  state = digitalRead(13);
-  digitalWrite(13, LOW);
-  delay(500);
-  for ( int i = 0; i < n; i++ ){
-    digitalWrite(13, HIGH);
-    delay(500);
-    digitalWrite(13, LOW);
-    delay(500);
-  }
-  digitalWrite(13, state);
-}
-  
-void blink_led() {
-  digitalWrite(13, !digitalRead(13));
-  delay(10);
-  digitalWrite(13, !digitalRead(13));
-} 
 
 void light_strip(int red, int green, int blue) {
   // TODO: validation
