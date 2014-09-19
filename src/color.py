@@ -1,4 +1,4 @@
-from math import pow, swrt
+from math import pow, sqrt
 
 __author__ = ('evan', )
 
