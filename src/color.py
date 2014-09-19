@@ -1,3 +1,4 @@
+from math import pow, swrt
 
 __author__ = ('evan', )
 
@@ -28,7 +29,7 @@ class PPColor(object):
 
         return c
 
-    def get_distance(self, other_color):
+    def get_distance(self, other_color_tuple):
         """
         get the distance between this color and another
 
@@ -37,9 +38,9 @@ class PPColor(object):
         :return int:
         """
         return sqrt(
-            pow(self.R - other_color.R, 2) +\
-            pow(self.G - other_color.G, 2) +\
-            pow(self.B - other_color.B, 2) +\
+            pow(self.R - other_color_tuple[0], 2) +\
+            pow(self.G - other_color_tuple[1], 2) +\
+            pow(self.B - other_color_tuple[2], 2) +\
         )
 
     def __str__(self):
