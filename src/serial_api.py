@@ -44,6 +44,3 @@ class SerialApi(object):
         self.ser.write(chr(b))
 
         feedback = self.ser.read()
-        print feedback
-        print feedback.__class__
-        
