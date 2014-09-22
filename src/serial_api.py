@@ -1,5 +1,5 @@
 from .config import SERIAL_DEVICE, SERIAL_DEVICE2
-
+import sys
 import serial
 from time import sleep
 
@@ -15,7 +15,11 @@ class SerialApi(object):
         try:
             self.ser = serial.Serial(SERIAL_DEVICE, 9600, timeout=5.0) # 5 second read timeout.
         except serial.serialutil.SerialException:
-            self.ser = serial.Serial(SERIAL_DEVICE2, 9600, timeout=5.0)
+            try:
+                self.ser = serial.Serial(SERIAL_DEVICE2, 9600)
+            except serial.serialutil.SerialException:
+                print "cant find arduino. Exiting"
+                sys.exit()
 
         sleep(1)
 
