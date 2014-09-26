@@ -55,9 +55,9 @@ void loop(){
    }
    delay(50);
    
-  int red = 185;
-  int green = 204;
-  int blue = 195;
+  int red = 0;
+  int green = 0;
+  int blue = 0;
 
   light_strip(red, green, blue);
 }
