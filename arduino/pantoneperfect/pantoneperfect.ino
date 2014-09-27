@@ -14,14 +14,66 @@ typedef struct {
 // LOWELL
 static RGB all_colors[] = {
   {0, 0, 0}, // 0th index is a throwaway
-  {1, 2, 3},
-  {2, 2, 3}
+  {223, 213, 190}, // Colour 0
+  {216, 212, 194},  //Colour 1
+  {216, 212, 194},  //Colour 2
+  {215, 211, 215},  //Colour 3
+  {198, 207, 193},  //Colour 4
+  {196, 194, 185},  //Colour 5
+  {188, 196, 191},  //Colour 6
+  {184, 192, 187},  //Colour 7
+  {181, 191, 187},  //Colour 8
+  {185, 204, 195},  //Colour 9
+  {185, 204, 195},  //Colour 10
+  {160, 185, 188},  //Colour 11
+  {173, 187, 173},  //Colour 12
+  {164, 188, 191},  //Colour 13
+  {164, 188, 191},  //Colour 14
+  {143, 177, 171},  //Colour 15
+  {143, 169, 172},  //Colour 16
+  {129, 158, 168},  //Colour 17
+  {125, 154, 170},  //Colur 18
+  {118, 154, 159},  //Colour 19
+  {120, 159, 168},  //Colour 20
+  {95, 141, 159},  //Colour 21
+  {97, 137, 152},  //Colour 22
+  {90, 128, 147},  //Colour 23
+  {75, 119, 135},  //Colour 24
+  {71, 115, 136},  //Colour 25
+  {94, 120, 143},  //Colour 26
+  {68, 105, 125},  //Colour 27
+  {79, 105, 132},  //Colour 28
+  {52, 101, 127},  //Colour 29
+  {65, 116, 141},  //Colour 30
+  {24, 41, 57},  //Colour 31
+  {52, 101, 127},  //Colour 32
+  {52, 101, 127},  //Colour 33
+  {52, 101, 127},  //Colour 34
+  {48, 88, 121},  //Colour 35
+  {50, 84, 119},  //Colour 36
+  {57, 87, 117},  //Colour 37
+  {50, 84, 119},  //Colour 38
+  {34, 65, 101},  //Colour 39
+  {56, 79, 107},  //Colour 40
+  {37, 54, 89},  //Colour 41
+  {42, 55, 79},  //Colour 42
+  {47, 54, 84},  // Colour 43
+  {50, 67, 90},  //Colour 44
+  {47, 51, 73},  //Colour 45
+  {47, 51, 73},  //Colour 46
+  {38, 49, 69},  //Colour 47
+  {61, 64, 77},  //Colour 48
+  {49, 53, 62},  //Colour 49
+  {46, 50, 56},  //Colour 50
+  {51, 50, 53},  //Colour 51
+  {19, 3, 3},  //Colour 52
+  {199, 201, 199}  //Middle grey Colour
+  
 };
 int num_colors = sizeof(all_colors) / sizeof(all_colors[0]);
 
 int neopixel_pins[] = {4, 5, 6, 7};
-int numstrip_neopixels = 3; // LOWELL 
-int num_neopixels = numstrip_neopixels*60;
+int num_neopixels = 188; 
 Adafruit_NeoPixel led_strips[] = {
   Adafruit_NeoPixel(num_neopixels, neopixel_pins[0]),
   Adafruit_NeoPixel(num_neopixels, neopixel_pins[1]),
