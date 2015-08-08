@@ -37,29 +37,23 @@ def take_and_analyze_picture(api = None):
     print color
     return color
 
-def run():
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(18, GPIO.IN)
-    GPIO.setup(7, GPIO.IN)
+def run_cli_loop(delay):
+    """
+    Run an infinite loop that takes pictures and analyzes them
+    then prints the color to the cli
+
+    :param delay: the time between pictures (seconds)
+    """
+
     api = PPApi()
     while True:
         # TODO: implement soft shutdown
 
-        input_value = GPIO.input(18)
-        shutdown = GPIO.input(7)
-        if input_value == True:
-            # TODO: should we light an LED to show that the process started?
-            filename = api.take_picture()
-            color = api.get_image_color(filename)
-            r = color[0]
-            g = color[1]
-            b = color[2]
-            # @TODO: do something with the color
-        if shutdown == True:
-            os.system("sudo shutdown -h now")
-            break
-
-        time.sleep(0.01)
+        # TODO: should we light an LED to show that the process started?
+        filename = api.take_picture()
+        color = api.get_image_color(filename)
+        print "R:%s G:%s B:%s" % (color[0], color[1], color[2])        
+        time.sleep(delay)
 
 def print_help():
     print "USAGE: %s <command>" % argv[0]
@@ -67,7 +61,7 @@ def print_help():
     print "get_image_color <path_to_image>"
     print "take_picture"
     print "take_and_analyze_picture"
-    print "run"
+    print "run_cli_loop"
 
 if __name__ == '__main__':
     if len(argv) >= 2:
@@ -80,8 +74,13 @@ if __name__ == '__main__':
             take_picture()
         elif command == 'take_and_analyze_picture':
             take_and_analyze_picture()
-        elif command == 'run':
-                run()
+        elif command == 'run_cli_loop':
+            if len(argv) == 3:
+                delay = argv[2]
+            else
+                delay = 30
+                run_cli_loop(delay)
+
         elif command == 'test':
             test()
 
