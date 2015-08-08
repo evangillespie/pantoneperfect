@@ -23,7 +23,6 @@ class PPApi(object):
         img = Image.open(filepath)
         pixel_sum = {'red':0, 'green':0, 'blue':0}
         pixel_count = 0
-        print img.getdata()
         for r,g,b in img.getdata():
             if IGNORE_BRIGHT_PIXELS:
                 if r >= IGNORE_BRIGHT_THRESHHOLD and \

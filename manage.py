@@ -77,7 +77,7 @@ if __name__ == '__main__':
         elif command == 'run_cli_loop':
             if len(argv) == 3:
                 delay = argv[2]
-            else
+            else:
                 delay = 30
                 run_cli_loop(delay)
 
