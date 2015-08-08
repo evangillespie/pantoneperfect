@@ -2,7 +2,7 @@ import time
 from .color import PPColor
 from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD, IMAGE_DIRECTORY, COMPARE_COLOR, COMPARE_COLOR_SET
 from PIL import Image
-# import picamera
+import picamera
 
 __author__ = ('evan', )
 
