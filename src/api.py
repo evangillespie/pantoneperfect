@@ -2,7 +2,7 @@ import time
 from .color import PPColor
 from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD, IMAGE_DIRECTORY, COMPARE_COLOR, COMPARE_COLOR_SET
 from PIL import Image
-import picamera
+# import picamera
 
 __author__ = ('evan', )
 
@@ -12,8 +12,9 @@ class PPApi(object):
     """
 
     def __init__(self):
-        self.camera = picamera.PiCamera()
-        self.camera.resolution = (640, 480)
+        # self.camera = picamera.PiCamera()
+        # self.camera.resolution = (640, 480)
+        pass
 
     def get_image_color(self, filepath):
         """
@@ -22,6 +23,7 @@ class PPApi(object):
         img = Image.open(filepath)
         pixel_sum = {'red':0, 'green':0, 'blue':0}
         pixel_count = 0
+        print img.getdata()
         for r,g,b in img.getdata():
             if IGNORE_BRIGHT_PIXELS:
                 if r >= IGNORE_BRIGHT_THRESHHOLD and \
