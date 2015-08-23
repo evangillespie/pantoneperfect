@@ -1,10 +1,14 @@
 import time
 from .color import PPColor
-from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD, IMAGE_DIRECTORY, COMPARE_COLOR, COMPARE_COLOR_SET
+from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD, PLATFORM
+from .config import IMAGE_DIRECTORY, COMPARE_COLOR, COMPARE_COLOR_SET
 from PIL import Image
-import picamera
+if PLATFORM == 'pi':
+    import picamera
 
-__author__ = ('evan', )
+
+__author__ = ('Evan Gillespie', )
+
 
 class PPApi(object):
     """
@@ -12,9 +16,11 @@ class PPApi(object):
     """
 
     def __init__(self):
-        self.camera = picamera.PiCamera()
-        self.camera.resolution = (640, 480)
-        pass
+        if PLATFORM == 'pi':
+            self.camera = picamera.PiCamera()
+            self.camera.resolution = (640, 480)
+        else:
+            pass
 
     def get_image_color(self, filepath):
         """
@@ -58,11 +64,11 @@ class PPApi(object):
 
         :return string: filename
         """
-        
-        filename = "sky_"+str(int(time.time()))+".jpg"
         directory = IMAGE_DIRECTORY
-        
-        self.camera.capture(directory+"/"+filename)
-        return directory+"/"+filename
-
-        
+        if PLATFORM == 'pi':
+            filename = "sky_"+str(int(time.time()))+".jpg"
+            self.camera.capture(directory+"/"+filename)
+            return directory+"/"+filename
+        else:
+            "can't take a new picture because you're not on the pi"
+            return directory + "/sample.jpg"

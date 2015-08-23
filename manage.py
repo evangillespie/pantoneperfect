@@ -2,9 +2,13 @@ import time
 import os
 from sys import argv
 from PIL import Image
-import RPi.GPIO as GPIO
+from os import path
+from src.config import PLATFORM, IMAGE_DIRECTORY, COMPARE_COLOR_SET
+if PLATFORM == 'pi':
+    import RPi.GPIO as GPIO
 
 from src.api import PPApi
+from src.gui import PPGui
 
 __author__ = ('evan', )
 
@@ -48,12 +52,36 @@ def run_cli_loop(delay):
     api = PPApi()
     while True:
         # TODO: implement soft shutdown
-
-        # TODO: should we light an LED to show that the process started?
         filename = api.take_picture()
         color = api.get_image_color(filename)
         print "R:%s G:%s B:%s" % (color[0], color[1], color[2])        
         time.sleep(delay)
+
+
+def run_gui_loop(delay):
+    """
+    same as run_cli_loop, but uses a gui
+
+    :param delay: time between pictures (seconds)
+    """
+    gui = PPGui()
+
+    gui.get_root().mainloop()
+
+def generate_images():
+    """
+    create an image in the output directory for each colour
+    available in the set config.COMPARE_COLOR_SET
+    """
+    print "generating images..."
+    directory = path.join(IMAGE_DIRECTORY, "color_swatches")
+    size = (300, 300)
+    
+    for c_tuple in COMPARE_COLOR_SET:
+        im = Image.new('RGB', size=size, color=c_tuple)
+        filename = directory + "/" + str(c_tuple).replace("(", "").replace(")", "").replace(", ", "-") + ".jpg"
+        im.save(filename, "JPEG")
+
 
 def print_help():
     print "USAGE: %s <command>" % argv[0]
@@ -62,6 +90,7 @@ def print_help():
     print "take_picture"
     print "take_and_analyze_picture"
     print "run_cli_loop"
+    print "run_gui_loop"
 
 if __name__ == '__main__':
     if len(argv) >= 2:
@@ -80,9 +109,15 @@ if __name__ == '__main__':
             else:
                 delay = 30
                 run_cli_loop(delay)
+        elif command == 'run_gui_loop':
+            if len(argv) == 3:
+                delay = argv[2]
+            else:
+                delay = 30
+                run_gui_loop(delay)
 
-        elif command == 'test':
-            test()
+        elif command == 'generate_images':
+            generate_images()
 
     else:
         print_help()
