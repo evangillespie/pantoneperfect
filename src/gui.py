@@ -1,6 +1,8 @@
 from Tkinter import *
 from random import choice
 
+from .api import PPApi
+
 
 __author__ = ("Evan Gillespie",)
 
@@ -12,7 +14,10 @@ class PPGui(object):
 
 	def __init__(self):
 		"""
+		initialize the gui
 		"""
+		self.api = PPApi()
+
 		self.root = Tk()
 
 		# make the root widget fullscreen
@@ -33,14 +38,14 @@ class PPGui(object):
 
 
 	def take_picture_and_analyze(self, event):
-		bg_colors = [
-			'#90E0D0',
-			'#40E0FF',
-			'#40E000',
-			'#4012D0'
-		]
-		c = choice(bg_colors)
-		self.label.config(bg=c, text=c)
+
+		filename = self.api.take_picture()
+		color = self.api.get_image_color(filename)
+		name = self.api.get_name_from_color_tuple(color)
+
+		print color
+		c = '#%02x%02x%02x' % (color[0], color[1], color[2])
+		self.label.config(bg=c, text=name)
 
 
 	def get_root(self):

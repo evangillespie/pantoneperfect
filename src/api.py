@@ -72,3 +72,16 @@ class PPApi(object):
         else:
             "can't take a new picture because you're not on the pi"
             return directory + "/sample.jpg"
+
+
+    def get_name_from_color_tuple(self, color_tuple):
+        """
+        return the name of an rgb color tuple
+
+        :param color_tuple: 3 tuple containing R G B values
+
+        :return: string name of that color
+        """
+        # @TODO: finish
+
+        return "This function is imcomplete"
