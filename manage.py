@@ -77,7 +77,7 @@ def generate_images():
     directory = path.join(IMAGE_DIRECTORY, "color_swatches")
     size = (300, 300)
     
-    for c_tuple in COMPARE_COLOR_SET:
+    for c_tuple in COMPARE_COLOR_SET.values():
         im = Image.new('RGB', size=size, color=c_tuple)
         filename = directory + "/" + str(c_tuple).replace("(", "").replace(")", "").replace(", ", "-") + ".jpg"
         im.save(filename, "JPEG")
@@ -86,6 +86,7 @@ def generate_images():
 def print_help():
     print "USAGE: %s <command>" % argv[0]
     print "COMMANDS:"
+    print "generate_images"
     print "get_image_color <path_to_image>"
     print "take_picture"
     print "take_and_analyze_picture"
@@ -118,6 +119,9 @@ if __name__ == '__main__':
 
         elif command == 'generate_images':
             generate_images()
+        
+        else:
+            print_help()
 
     else:
         print_help()

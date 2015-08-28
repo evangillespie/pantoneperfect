@@ -1,7 +1,6 @@
 import time
-from .color import PPColor
 from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD, PLATFORM
-from .config import IMAGE_DIRECTORY, COMPARE_COLOR, COMPARE_COLOR_SET
+from .config import IMAGE_DIRECTORY, COMPARE_COLOR_SET
 from PIL import Image
 if PLATFORM == 'pi':
     import picamera
@@ -45,18 +44,7 @@ class PPApi(object):
         g_avg = int(pixel_sum['green'] / pixel_count)
         b_avg = int(pixel_sum['blue'] / pixel_count)
 
-        color = PPColor.create_color(r_avg, g_avg, b_avg)
-        if COMPARE_COLOR:
-            min_distance = 255*255*3    # some impossibly huge distance
-            best_match = None
-            for compare_color_tuple in COMPARE_COLOR_SET:
-                distance = color.get_distance(compare_color_tuple)
-                if ( not best_match ) or ( distance < min_distance ):
-                    best_match = PPColor.create_color(compare_color_tuple[0], compare_color_tuple[1], compare_color_tuple[2])
-                    min_distance = distance
-            return best_match.to_tuple()
-        else:
-            return color.to_tuple()
+        return (r_avg, g_avg, b_avg)
 
     def take_picture(self):
         """
@@ -83,5 +71,6 @@ class PPApi(object):
         :return: string name of that color
         """
         # @TODO: finish
+        from random import choice
 
-        return "This function is imcomplete"
+        return "%s (This function is imcomplete)" % choice(COMPARE_COLOR_SET.keys())
