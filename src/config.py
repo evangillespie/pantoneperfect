@@ -12,7 +12,7 @@ IGNORE_BRIGHT_THRESHHOLD=240
 
 # directory in the filesyetem that images are stored in
 if PLATFORM == "pi":
-	IMAGE_DIRECTORY = '/home/pi/pantoneperfect/images'
+	IMAGE_DIRECTORY = '/home/pi/pantoneperfect/images/camera'
 elif PLATFORM == "pc":
 	IMAGE_DIRECTORY = '/Users/evan/Documents/programs/pantoneperfect/images'
 
