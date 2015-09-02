@@ -57,8 +57,7 @@ def run_cli_loop(delay):
             name = api.get_name_from_color_tuple(color)
             match_color = COMPARE_COLOR_SET[name]
 
-            print "real : R:%s G:%s B:%s" % (color[0], color[1], color[2])
-            print "match: R:%s G:%s B:%s (%s)" % (match_color[0], match_color[1], match_color[2], name)    
+            print "%s: %s" % (name, color)
             time.sleep(delay)
         except KeyboardInterrupt:
             print "Done."
