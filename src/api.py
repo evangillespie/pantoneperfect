@@ -70,7 +70,29 @@ class PPApi(object):
 
         :return: string name of that color
         """
-        # @TODO: finish
-        from random import choice
+        best_name = None
+        best_distance = (255*255*3) ** 0.5 # greatest possible distanc
 
-        return "%s (This function is imcomplete)" % choice(COMPARE_COLOR_SET.keys())
+        for name, compare_color in COMPARE_COLOR_SET.iteritems():
+            dist = self.get_distance_between_colors(color_tuple, compare_color)
+
+            if dist <= best_distance:
+                best_name = name
+                best_distance = dist
+
+        return best_name
+
+
+    def get_distance_between_colors(self, color1, color2):
+        """
+        get the euclidean distance between two color tuples
+
+        :param color1: first color to compare
+        :param color2: second color to compare
+
+        :return: distance between them
+        """
+        dist = ((color1[0] - color2[0])**2 + (color1[1] - color2[1])**2 + (color1[2] - color2[2])**2)**0.5
+
+        return dist
+
