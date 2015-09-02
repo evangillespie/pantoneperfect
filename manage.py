@@ -3,7 +3,8 @@ import os
 from sys import argv
 from PIL import Image
 from os import path
-from src.config import PLATFORM, IMAGE_DIRECTORY, COMPARE_COLOR_SET
+from src.config import IMAGE_DIRECTORY, COMPARE_COLOR_SET
+from src.platform import PLATFORM
 if PLATFORM == 'pi':
     import RPi.GPIO as GPIO
 
@@ -48,7 +49,6 @@ def run_cli_loop(delay):
 
     :param delay: the time between pictures (seconds)
     """
-
     api = PPApi()
     while True:
         try:

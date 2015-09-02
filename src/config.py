@@ -1,7 +1,4 @@
-
-# what platform is this being run on right now?
-PLATFORM = 'pc'
-
+from os import path
 
 # Should we ignore all pixels where all values are above a theshhold?
 IGNORE_BRIGHT_PIXELS=True
@@ -11,10 +8,7 @@ IGNORE_BRIGHT_THRESHHOLD=240
 
 
 # directory in the filesyetem that images are stored in
-if PLATFORM == "pi":
-	IMAGE_DIRECTORY = '/home/pi/pantoneperfect/images/camera'
-elif PLATFORM == "pc":
-	IMAGE_DIRECTORY = '/Users/evan/Documents/programs/pantoneperfect/images'
+IMAGE_DIRECTORY = path.join(path.dirname(path.dirname(path.realpath(__file__))), "images")
 
 
 COMPARE_COLOR_SET = {

@@ -1,7 +1,9 @@
 import time
+from os import path
 from random import choice
-from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD, PLATFORM
+from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD
 from .config import IMAGE_DIRECTORY, COMPARE_COLOR_SET
+from .platform import PLATFORM
 from PIL import Image
 if PLATFORM == 'pi':
     import picamera
@@ -81,13 +83,14 @@ class PPApi(object):
         """
         directory = IMAGE_DIRECTORY
         if PLATFORM == 'pi':
+            directory = path.join(IMAGE_DIRECTORY, "camera")
             filename = "sky_"+str(int(time.time()))+".jpg"
             self.camera.capture(directory+"/"+filename)
-            return directory+"/"+filename
+            return path.join(directory,filename)
         else:
             # can't take a new picture because you're not on the pi
 
-            return directory + "/sample%d.jpg" % choice(range(4))
+            return path.join(directory,"sample%d.jpg" % choice(range(4)))
 
 
     def get_name_from_color_tuple(self, color_tuple):
