@@ -44,6 +44,12 @@ class PPApi(object):
             max_count = 0
             color = None
             for count, c in img.getcolors(w*h): # max colors is a different color in each pixel
+                if IGNORE_BRIGHT_PIXELS:
+                    if c[0] >= IGNORE_BRIGHT_THRESHHOLD and \
+                        c[1] >= IGNORE_BRIGHT_THRESHHOLD and \
+                        c[2] >= IGNORE_BRIGHT_THRESHHOLD:
+                        continue
+
                 if count > max_count:
                     color = c
 
@@ -89,7 +95,6 @@ class PPApi(object):
             return path.join(directory,filename)
         else:
             # can't take a new picture because you're not on the pi
-
             return path.join(directory,"sample%d.jpg" % choice(range(4)))
 
 
@@ -127,3 +132,9 @@ class PPApi(object):
 
         return dist
 
+
+    def print_color(self, name, color, filename):
+        """
+        print information about the color
+        """
+        print "%s: %s\t(%s)" % (name, color, path.basename(filename))

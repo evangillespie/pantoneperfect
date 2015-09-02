@@ -43,7 +43,7 @@ class PPGui(object):
 		color = self.api.get_image_color(filename)
 		name = self.api.get_name_from_color_tuple(color)
 
-		print "%s: %s" % (name, color)
+		self.api.print_color(name, color, filename)
 
 		# @TODO: should I display the color of the image or the color of the closest match?
 		c = '#%02x%02x%02x' % (color[0], color[1], color[2])

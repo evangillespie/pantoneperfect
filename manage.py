@@ -57,7 +57,8 @@ def run_cli_loop(delay):
             name = api.get_name_from_color_tuple(color)
             match_color = COMPARE_COLOR_SET[name]
 
-            print "%s: %s" % (name, color)
+            api.print_color(name, color, filename)
+
             time.sleep(delay)
         except KeyboardInterrupt:
             print "Done."
