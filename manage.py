@@ -51,14 +51,21 @@ def run_cli_loop(delay):
 
     api = PPApi()
     while True:
-        # TODO: implement soft shutdown
-        filename = api.take_picture()
-        color = api.get_image_color(filename)
-        print "R:%s G:%s B:%s" % (color[0], color[1], color[2])        
-        time.sleep(delay)
+        try:
+            filename = api.take_picture()
+            color = api.get_image_color(filename)
+            name = api.get_name_from_color_tuple(color)
+            match_color = COMPARE_COLOR_SET[name]
+
+            print "real : R:%s G:%s B:%s" % (color[0], color[1], color[2])
+            print "match: R:%s G:%s B:%s (%s)" % (match_color[0], match_color[1], match_color[2], name)    
+            time.sleep(delay)
+        except KeyboardInterrupt:
+            print "Done."
+            break
 
 
-def run_gui_loop(delay):
+def run_gui_loop():
     """
     same as run_cli_loop, but uses a gui
 
@@ -106,16 +113,12 @@ if __name__ == '__main__':
             take_and_analyze_picture()
         elif command == 'run_cli_loop':
             if len(argv) == 3:
-                delay = argv[2]
+                delay = int(argv[2])
             else:
                 delay = 30
-                run_cli_loop(delay)
+            run_cli_loop(delay)
         elif command == 'run_gui_loop':
-            if len(argv) == 3:
-                delay = argv[2]
-            else:
-                delay = 30
-                run_gui_loop(delay)
+            run_gui_loop()
 
         elif command == 'generate_images':
             generate_images()
