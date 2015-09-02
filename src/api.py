@@ -1,4 +1,5 @@
 import time
+from random import choice
 from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD, PLATFORM
 from .config import IMAGE_DIRECTORY, COMPARE_COLOR_SET
 from PIL import Image
@@ -23,26 +24,52 @@ class PPApi(object):
 
     def get_image_color(self, filepath):
         """
+        get the color of the sky in an image
+
+        :param filepath: path to the image we are finding the color of
+
+        :return: (R, G, B) tuple
+        """
+        return self.get_most_common_image_color(filepath)
+
+
+    def get_most_common_image_color(self, filepath):
+        """
+        get the most common pixel color from an image
+        """
+        with Image.open(filepath) as img:
+            w, h = img.size
+            max_count = 0
+            color = None
+            for count, c in img.getcolors(w*h): # max colors is a different color in each pixel
+                if count > max_count:
+                    color = c
+
+        return c
+
+
+    def get_average_image_color(self, filepath):
+        """
         get the average color of an image at filepath
         """
-        img = Image.open(filepath)
-        pixel_sum = {'red':0, 'green':0, 'blue':0}
-        pixel_count = 0
-        for r,g,b in img.getdata():
-            if IGNORE_BRIGHT_PIXELS:
-                if r >= IGNORE_BRIGHT_THRESHHOLD and \
-                    g >= IGNORE_BRIGHT_THRESHHOLD and \
-                    b >= IGNORE_BRIGHT_THRESHHOLD:
-                    continue
+        with Image.open(filepath) as img:
+            pixel_sum = {'red':0, 'green':0, 'blue':0}
+            pixel_count = 0
+            for r,g,b in img.getdata():
+                if IGNORE_BRIGHT_PIXELS:
+                    if r >= IGNORE_BRIGHT_THRESHHOLD and \
+                        g >= IGNORE_BRIGHT_THRESHHOLD and \
+                        b >= IGNORE_BRIGHT_THRESHHOLD:
+                        continue
 
-            pixel_sum['red'] += r
-            pixel_sum['green'] += g
-            pixel_sum['blue'] += b
-            pixel_count += 1
+                pixel_sum['red'] += r
+                pixel_sum['green'] += g
+                pixel_sum['blue'] += b
+                pixel_count += 1
 
-        r_avg = int(pixel_sum['red'] / pixel_count)
-        g_avg = int(pixel_sum['green'] / pixel_count)
-        b_avg = int(pixel_sum['blue'] / pixel_count)
+            r_avg = int(pixel_sum['red'] / pixel_count)
+            g_avg = int(pixel_sum['green'] / pixel_count)
+            b_avg = int(pixel_sum['blue'] / pixel_count)
 
         return (r_avg, g_avg, b_avg)
 
@@ -58,8 +85,9 @@ class PPApi(object):
             self.camera.capture(directory+"/"+filename)
             return directory+"/"+filename
         else:
-            "can't take a new picture because you're not on the pi"
-            return directory + "/sample.jpg"
+            # can't take a new picture because you're not on the pi
+
+            return directory + "/sample%d.jpg" % choice(range(4))
 
 
     def get_name_from_color_tuple(self, color_tuple):
