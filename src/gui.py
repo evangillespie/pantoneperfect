@@ -1,6 +1,7 @@
 from Tkinter import *
 from random import choice
 from .platform import PLATFORM
+from .config import COMPARE_COLOR_SET
 from .api import PPApi
 
 
@@ -46,11 +47,12 @@ class PPGui(object):
 		filename = self.api.take_picture()
 		color = self.api.get_image_color(filename)
 		name = self.api.get_name_from_color_tuple(color)
+		display_color = COMPARE_COLOR_SET[name]
 
 		self.api.print_color(name, color, filename)
 
 		# @TODO: should I display the color of the image or the color of the closest match?
-		c = '#%02x%02x%02x' % (color[0], color[1], color[2])
+		c = '#%02x%02x%02x' % (display_color[0], display_color[1], display_color[2])
 		self.label.config(bg=c, text=name)
 
 
