@@ -1,6 +1,6 @@
 from Tkinter import *
 from random import choice
-
+from .platform import PLATFORM
 from .api import PPApi
 
 
@@ -21,8 +21,12 @@ class PPGui(object):
 		self.root = Tk()
 
 		# make the root widget fullscreen
-		w, h = self.root.winfo_screenwidth(), self.root.winfo_screenheight()
-		self.root.overrideredirect(1)
+		if PLATFORM == 'pi':
+			w, h = self.root.winfo_screenwidth(), self.root.winfo_screenheight()
+			self.root.overrideredirect(1)
+		else:
+			w = 250
+			h = 250
 		self.root.geometry("%dx%d+0+0" % (w, h))
 
 		self.label = Label(

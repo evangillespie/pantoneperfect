@@ -58,6 +58,7 @@ class PPApi(object):
 
     def get_average_image_color(self, filepath):
         """
+        XXX: old way of finding dominant image color
         get the average color of an image at filepath
         """
         with Image.open(filepath) as img:
