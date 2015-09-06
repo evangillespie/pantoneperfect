@@ -32,11 +32,12 @@ class PPGui(object):
 
 		self.label = Label(
 			self.root,
-			text="LABEL",
-			# hex color string. This does it: '#%02x%02x%02x' % (64, 204, 208)
-			bg='#40E0D0',
-			fg='#101010',
+			text="",
+			# hex color string. This code formats it correctly: '#%02x%02x%02x' % (64, 204, 208)
+			bg='#555555',
+			fg='#FFFFFF',
 			anchor=SW,
+			font=("Helvetica", 30),
 		)
 		self.label.bind("<Button-1>", self.take_picture_and_analyze) 
 		self.label.pack(fill=BOTH, expand=1)
@@ -52,8 +53,16 @@ class PPGui(object):
 		self.api.print_color(name, color, filename)
 
 		# @TODO: should I display the color of the image or the color of the closest match?
-		c = '#%02x%02x%02x' % (display_color[0], display_color[1], display_color[2])
-		self.label.config(bg=c, text=name)
+		bgc = '#%02x%02x%02x' % (display_color[0], display_color[1], display_color[2])
+
+		# All this logic comes from https://24ways.org/2010/calculating-color-contrast/
+		yiq = ((display_color[0]*299)+(display_color[1]*587)+(display_color[2]*114))/1000;
+		if yiq >= 128:
+			fgc = "#000000"
+		else:
+			fgc = "#FFFFFF"
+
+		self.label.config(bg=bgc, fg=fgc, text=name)
 
 
 	def get_root(self):
