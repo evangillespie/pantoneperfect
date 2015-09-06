@@ -32,14 +32,15 @@ class PPGui(object):
 
 		self.label = Label(
 			self.root,
-			text="",
+			text="Tripple click to Exit",
 			# hex color string. This code formats it correctly: '#%02x%02x%02x' % (64, 204, 208)
 			bg='#555555',
 			fg='#FFFFFF',
 			anchor=SW,
 			font=("Helvetica", 30),
 		)
-		self.label.bind("<Button-1>", self.take_picture_and_analyze) 
+		self.label.bind("<Button-1>", self.take_picture_and_analyze)
+		self.label.bind("<Triple-Button-1>", lambda event: event.widget.quit())
 		self.label.pack(fill=BOTH, expand=1)
 
 
