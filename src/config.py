@@ -69,5 +69,4 @@ COMPARE_COLOR_SET = {
 	'50': (46, 50, 56), #50
 	'51': (51, 50, 53), #51
 	'52': (19, 3, 3), #52
-	'Middle Grey': (119, 201, 199), # Middle Grey Pantone 420 C
 }
