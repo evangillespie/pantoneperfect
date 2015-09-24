@@ -46,8 +46,8 @@ class PPGui(object):
 		#setup the gpio
 		if PLATFORM == "pi":
 			import RPi.GPIO as gpio
-			GPIO.setmode(GPIO.BCM)
-			GPIO.setup(BUTTON_GPIO_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+			gpio.setmode(gpio.BCM)
+			gpio.setup(BUTTON_GPIO_PIN, gpio.IN, pull_up_down=gpio.PUD_UP)
 
 		self.root.after(500, self.check_button_press)
 
