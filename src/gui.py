@@ -3,7 +3,8 @@ from random import choice
 from .platform import PLATFORM
 from .config import COMPARE_COLOR_SET, BUTTON_GPIO_PIN
 from .api import PPApi
-
+if PLATFORM == "pi":
+			import RPi.GPIO as gpio
 
 __author__ = ("Evan Gillespie",)
 
@@ -45,7 +46,6 @@ class PPGui(object):
 
 		#setup the gpio
 		if PLATFORM == "pi":
-			import RPi.GPIO as gpio
 			gpio.setmode(gpio.BCM)
 			gpio.setup(BUTTON_GPIO_PIN, gpio.IN, pull_up_down=gpio.PUD_UP)
 
@@ -65,7 +65,7 @@ class PPGui(object):
 			pass
 
 
-	def take_picture_and_analyze(self, event):
+	def take_picture_and_analyze(self, event=None):
 		"""
 		takes a picture, finds the dominant color, displays it on the screen
 		"""
