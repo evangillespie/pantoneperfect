@@ -11,6 +11,10 @@ IGNORE_BRIGHT_THRESHHOLD=240
 IMAGE_DIRECTORY = path.join(path.dirname(path.dirname(path.realpath(__file__))), "images")
 
 
+# Which GPIO pin is the button connected to?
+BUTTON_GPIO_PIN = 21
+
+
 COMPARE_COLOR_SET = {
 	'0': (223, 213, 190), #0
 	'1': (216, 212, 194), #1 and 2

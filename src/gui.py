@@ -1,7 +1,7 @@
 from Tkinter import *
 from random import choice
 from .platform import PLATFORM
-from .config import COMPARE_COLOR_SET
+from .config import COMPARE_COLOR_SET, BUTTON_GPIO_PIN
 from .api import PPApi
 
 
@@ -43,8 +43,32 @@ class PPGui(object):
 		self.label.bind("<Triple-Button-1>", lambda event: event.widget.quit())
 		self.label.pack(fill=BOTH, expand=1)
 
+		#setup the gpio
+		if PLATFORM == "pi":
+			import RPi.GPIO as gpio
+			GPIO.setmode(GPIO.BCM)
+			GPIO.setup(BUTTON_GPIO_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+		self.root.after(500, self.check_button_press)
+
+
+	def check_button_press(self):
+		"""
+		if the gpio button is currently depressed, take a picture and analyze it
+		"""
+		if PLATFORM == "pi":
+			if gpio.input(BUTTON_GPIO_PIN) == False:
+				self.take_picture_and_analyze()
+
+			self.root.after(10, self.check_button_press)
+		else:
+			pass
+
 
 	def take_picture_and_analyze(self, event):
+		"""
+		takes a picture, finds the dominant color, displays it on the screen
+		"""
 
 		filename = self.api.take_picture()
 		color = self.api.get_image_color(filename)
@@ -67,4 +91,7 @@ class PPGui(object):
 
 
 	def get_root(self):
+		"""
+		return the tkinter root object
+		"""
 		return self.root
