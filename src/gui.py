@@ -52,6 +52,8 @@ class PPGui(object):
 			gpio.setmode(gpio.BCM)
 			gpio.setup(BUTTON_GPIO_PIN, gpio.IN, pull_up_down=gpio.PUD_UP)
 
+			self.pushed_button_counter = 0
+
 		self.root.after(500, self.check_button_press)
 
 
@@ -61,7 +63,13 @@ class PPGui(object):
 		"""
 		if PLATFORM == "pi":
 			if gpio.input(BUTTON_GPIO_PIN) == False:
-				self.take_picture_and_analyze()
+				if self.pushed_button_counter == 0:
+					self.take_picture_and_analyze()
+				self.pushed_button_counter += 1
+				if self.pushed_button_counter >= GUI_BUTTON_LOOPS_TO_EXIT:
+					self.root.quit()
+			else:
+				self.pushed_button_counter = 0
 
 			self.root.after(10, self.check_button_press)
 		else:
