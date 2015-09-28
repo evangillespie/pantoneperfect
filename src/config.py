@@ -14,6 +14,10 @@ IMAGE_DIRECTORY = path.join(path.dirname(path.dirname(path.realpath(__file__))),
 # Which GPIO pin is the button connected to?
 BUTTON_GPIO_PIN = 21
 
+#GUI: PADDING AROUND THE TEXT (ANCHORED IN LOWER LEFT)
+GUI_PAD_TEXT_X = 50
+GUI_PAD_TEXT_Y = 50
+
 
 COMPARE_COLOR_SET = {
 	'0': (223, 213, 190), #0

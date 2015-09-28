@@ -1,7 +1,7 @@
 from Tkinter import *
 from random import choice
 from .platform import PLATFORM
-from .config import COMPARE_COLOR_SET, BUTTON_GPIO_PIN
+from .config import COMPARE_COLOR_SET, BUTTON_GPIO_PIN, GUI_PAD_TEXT_X, GUI_PAD_TEXT_Y
 from .api import PPApi
 if PLATFORM == "pi":
 			import RPi.GPIO as gpio
@@ -33,15 +33,18 @@ class PPGui(object):
 
 		self.label = Label(
 			self.root,
-			text="Tripple click to Exit",
+			text="Double click to Exit",
 			# hex color string. This code formats it correctly: '#%02x%02x%02x' % (64, 204, 208)
 			bg='#555555',
 			fg='#FFFFFF',
 			anchor=SW,
+			padx=GUI_PAD_TEXT_X,
+			pady=GUI_PAD_TEXT_Y,
 			font=("Helvetica", 30),
+			cursor="none",
 		)
 		self.label.bind("<Button-1>", self.take_picture_and_analyze)
-		self.label.bind("<Triple-Button-1>", lambda event: event.widget.quit())
+		self.label.bind("<Double-Button-1>", lambda event: event.widget.quit())
 		self.label.pack(fill=BOTH, expand=1)
 
 		#setup the gpio
