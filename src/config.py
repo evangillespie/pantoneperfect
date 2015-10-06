@@ -1,10 +1,10 @@
 from os import path
 
 # Should we ignore all pixels where all values are above a theshhold?
-IGNORE_BRIGHT_PIXELS=False
+IGNORE_BRIGHT_PIXELS=True
 
 # What is the threshhold for all three colors to ignore the pixels
-IGNORE_BRIGHT_THRESHHOLD=240
+IGNORE_BRIGHT_THRESHHOLD=255
 
 
 # directory in the filesyetem that images are stored in
@@ -46,7 +46,7 @@ COMPARE_COLOR_SET = {
 	'23': (90, 128, 147), #23
 	'24': (75, 119, 135), #24
 	'25': (71, 115, 136), #25
-	'26': (94, 120, 143), #26
+	#'26': (94, 120, 143), #26
 	'27': (68, 105, 125), #27
 	'28': (79, 105, 132), #28
 	'29': (52, 101, 127), #29
