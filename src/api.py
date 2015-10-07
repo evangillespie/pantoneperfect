@@ -52,7 +52,9 @@ class PPApi(object):
                         c[2] >= IGNORE_BRIGHT_THRESHHOLD:
                         continue
 
-                    n = self.get_name_from_color_tuple(c)
+                    n = self.get_name_from_color_tuple(c, max_distance=50)
+                    if n == None:
+                        continue    # too far from named colors
                     if n in counts:
                         counts[n] += count
                     else:
@@ -132,13 +134,14 @@ class PPApi(object):
             return path.join(directory,"sample%d.jpg" % choice(range(4)))
 
 
-    def get_name_from_color_tuple(self, color_tuple):
+    def get_name_from_color_tuple(self, color_tuple, max_distance=None):
         """
         return the name of an rgb color tuple
 
         :param color_tuple: 3 tuple containing R G B values
+        :param max_distance: te maximum distance between the named color and color_tuple
 
-        :return: string name of that color
+        :return: string name of that color. None if max_distance is exceeded
         """
         best_name = None
         best_distance = (255*255*3) ** 0.5 # greatest possible distanc
@@ -149,6 +152,10 @@ class PPApi(object):
             if dist <= best_distance:
                 best_name = name
                 best_distance = dist
+
+        if max_distance != None:
+            if best_distance > max_distance:
+                return None
 
         return best_name
 
