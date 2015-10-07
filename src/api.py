@@ -32,7 +32,7 @@ class PPApi(object):
 
         :return: (R, G, B) tuple
         """
-        return self.get_most_frequent_image_color(filepath)
+        return self.get_most_common_image_color(filepath)
 
 
     def get_most_frequent_image_color(self, filepath):
