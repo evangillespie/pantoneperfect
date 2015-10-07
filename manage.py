@@ -20,7 +20,8 @@ def get_image_color(filepath, printout = False):
     api = PPApi()
     color = api.get_image_color(filepath)
     if printout:
-        print color
+        name = api.get_name_from_color_tuple(color)
+        print "%s: %s" %(name, color)
     return color
 
 def take_picture(api = None):
@@ -84,9 +85,9 @@ def generate_images():
     directory = path.join(IMAGE_DIRECTORY, "color_swatches")
     size = (300, 300)
     
-    for c_tuple in COMPARE_COLOR_SET.values():
+    for c_name, c_tuple in COMPARE_COLOR_SET.iteritems():
         im = Image.new('RGB', size=size, color=c_tuple)
-        filename = directory + "/" + str(c_tuple).replace("(", "").replace(")", "").replace(", ", "-") + ".jpg"
+        filename = "%s/%s--%s.jpg" % (directory, c_name, str(c_tuple).replace("(", "").replace(")", "").replace(", ", "-"))
         im.save(filename, "JPEG")
 
 

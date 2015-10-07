@@ -32,7 +32,40 @@ class PPApi(object):
 
         :return: (R, G, B) tuple
         """
-        return self.get_most_common_image_color(filepath)
+        return self.get_most_frequent_image_color(filepath)
+
+
+    def get_most_frequent_image_color(self, filepath):
+        """
+        get the most frequently used pixel color by comparing 
+        each pixel to the possible colors
+        """
+        with Image.open(filepath) as img:
+            w, h = img.size
+            max_count = 0
+            color = None
+            counts = {}
+            for count, c in img.getcolors(w*h):
+                if IGNORE_BRIGHT_PIXELS:
+                    if c[0] >= IGNORE_BRIGHT_THRESHHOLD and \
+                        c[1] >= IGNORE_BRIGHT_THRESHHOLD and \
+                        c[2] >= IGNORE_BRIGHT_THRESHHOLD:
+                        continue
+
+                    n = self.get_name_from_color_tuple(c)
+                    if n in counts:
+                        counts[n] += count
+                    else:
+                        counts[n] = count
+
+            max = 0
+            max_color_name = None
+            for color_name, num in counts.iteritems():
+                if num > max:
+                    max_color_name = color_name
+                    max = num
+
+            return COMPARE_COLOR_SET[max_color_name]
 
 
     def get_most_common_image_color(self, filepath):
