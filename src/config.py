@@ -1,5 +1,11 @@
 from os import path
 
+# the size of picture to analyze. bigger makes it more consitent but slower
+KMEANS_CONFIG_SIZE = 250
+
+# how big is the hack that biases the color selection to the middle? 0 to turn it off
+KMEANS_CONFIG_HACK_FACTOR = 0.007
+
 # Should we ignore all pixels where all values are above a theshhold?
 IGNORE_BRIGHT_PIXELS=True
 

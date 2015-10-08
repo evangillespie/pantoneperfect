@@ -35,7 +35,7 @@ class Cluster(object):
 
 class Kmeans(object):
 
-    def __init__(self, k=3, max_iterations=10, min_distance=5.0, size=400):
+    def __init__(self, k=3, max_iterations=10, min_distance=5.0, size=200):
         self.k = k
         self.max_iterations = max_iterations
         self.min_distance = min_distance

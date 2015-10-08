@@ -3,6 +3,7 @@ from os import path
 from random import choice
 from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD
 from .config import IMAGE_DIRECTORY, COMPARE_COLOR_SET
+from .config import KMEANS_CONFIG_SIZE, KMEANS_CONFIG_HACK_FACTOR
 from .platform import PLATFORM
 from .clustering import Kmeans
 from PIL import Image
@@ -44,22 +45,33 @@ class PPApi(object):
 
         :return: (R, G, B) tuple
         """
-        k = Kmeans(k=4)
-        cluster_centroids = k.run(filepath)
-        # k.showClustering()
+        k = Kmeans(k=3, max_iterations=10, size=KMEANS_CONFIG_SIZE)
+        try:
+            cluster_centroids = k.run(filepath)
+            # k.showClustering()
 
-        shortest_dist = 450 #just a big number for now
-        best_cluster = None
-        best_name = None
-        for c in cluster_centroids:
-            name, dist = self.get_name_and_distance_from_color_tuple(c)
-            # print "%s: %s" % (name, dist)
-            if dist <= shortest_dist:
-                shortest_dist = dist
-                best_cluster = c
-                best_name = name
+            distances = []
+            for c in cluster_centroids:
+                distances.append(self.get_name_and_distance_from_color_tuple(c))
 
-        return COMPARE_COLOR_SET[best_name]
+            # modify the distances so that those in the middle are slightly more likely
+            def distance_mod(x):
+                """
+                calculate the modifier for distance modifier given the x values
+                """
+                factor = KMEANS_CONFIG_HACK_FACTOR  # edit this
+                y = x - 26.5
+                y = y ** 2
+                y *= -1
+                y += 650.25
+                y *= factor    # the factor from the spreadsheet
+                return y
+
+            distances = [( name, distance - distance_mod(int(name)) ) for name, distance in distances]
+
+            return COMPARE_COLOR_SET[sorted(distances, key=lambda dist: dist[1])[0][0]]
+        except ZeroDivisionError:
+            return COMPARE_COLOR_SET['0']   #error happens regularly. Just do some bullshit
 
 
     def get_most_frequent_image_color(self, filepath):
