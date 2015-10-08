@@ -4,6 +4,7 @@ from random import choice
 from .config import IGNORE_BRIGHT_PIXELS, IGNORE_BRIGHT_THRESHHOLD
 from .config import IMAGE_DIRECTORY, COMPARE_COLOR_SET
 from .platform import PLATFORM
+from .clustering import Kmeans
 from PIL import Image
 if PLATFORM == 'pi':
     import picamera
@@ -32,7 +33,33 @@ class PPApi(object):
 
         :return: (R, G, B) tuple
         """
-        return self.get_most_common_image_color(filepath)
+        return self.get_best_cluster_color(filepath)
+
+
+    def get_best_cluster_color(self, filepath):
+        """
+        run a kmeans clustering algorithm on the colors in filepath and pick the best one
+
+        :param filepath: path to the image we are finding the color of
+
+        :return: (R, G, B) tuple
+        """
+        k = Kmeans(k=4)
+        cluster_centroids = k.run(filepath)
+        # k.showClustering()
+
+        shortest_dist = 450 #just a big number for now
+        best_cluster = None
+        best_name = None
+        for c in cluster_centroids:
+            name, dist = self.get_name_and_distance_from_color_tuple(c)
+            # print "%s: %s" % (name, dist)
+            if dist <= shortest_dist:
+                shortest_dist = dist
+                best_cluster = c
+                best_name = name
+
+        return COMPARE_COLOR_SET[best_name]
 
 
     def get_most_frequent_image_color(self, filepath):
@@ -158,6 +185,27 @@ class PPApi(object):
                 return None
 
         return best_name
+
+
+    def get_name_and_distance_from_color_tuple(self, color_tuple):
+        """
+        return the name of an rgb color tuple and the distance between the rbg tuple and the names color
+
+        :param color_tuple: 3 tuple containing R G B values
+
+        :return: tuple: (string name, distance)
+        """
+        best_name = None
+        best_distance = (255*255*3) ** 0.5 # greatest possible distanc
+
+        for name, compare_color in COMPARE_COLOR_SET.iteritems():
+            dist = self.get_distance_between_colors(color_tuple, compare_color)
+
+            if dist <= best_distance:
+                best_name = name
+                best_distance = dist
+
+        return (best_name, best_distance)
 
 
     def get_distance_between_colors(self, color1, color2):
