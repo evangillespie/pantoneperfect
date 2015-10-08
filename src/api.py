@@ -23,6 +23,16 @@ class PPApi(object):
         if PLATFORM == 'pi':
             self.camera = picamera.PiCamera()
             self.camera.resolution = (640, 480)
+
+            camera.sharpness = 0
+            camera.contrast = 0
+            camera.brightness = 50
+            camera.saturation = 0
+            camera.ISO = 0
+            camera.exposure_compensation = 0
+            camera.exposure_mode = 'auto'
+            camera.meter_mode = 'average'
+            camera.awb_mode = 'auto'
         else:
             pass
 
