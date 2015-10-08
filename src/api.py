@@ -24,15 +24,15 @@ class PPApi(object):
             self.camera = picamera.PiCamera()
             self.camera.resolution = (640, 480)
 
-            camera.sharpness = 0
-            camera.contrast = 0
-            camera.brightness = 50
-            camera.saturation = 0
-            camera.ISO = 0
-            camera.exposure_compensation = 0
-            camera.exposure_mode = 'auto'
-            camera.meter_mode = 'average'
-            camera.awb_mode = 'auto'
+            self.camera.sharpness = 0
+            self.camera.contrast = 0
+            self.camera.brightness = 50
+            self.camera.saturation = 0
+            self.camera.ISO = 0
+            self.camera.exposure_compensation = 0
+            self.camera.exposure_mode = 'auto'
+            self.camera.meter_mode = 'average'
+            self.camera.awb_mode = 'auto'
         else:
             pass
 
