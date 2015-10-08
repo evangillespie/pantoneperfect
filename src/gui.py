@@ -73,6 +73,7 @@ class PPGui(object):
 		takes a picture, finds the dominant color, displays it on the screen
 		"""
 
+		self.label.config(text="...")
 		filename = self.api.take_picture()
 		color = self.api.get_image_color(filename)
 		name = self.api.get_name_from_color_tuple(color)
